@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="socket_spring"
+  id="myeclipse.1325738125906"
+  context-root="/socket_spring"
+  j2ee-spec="5.0"
+  archive="socket_spring.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

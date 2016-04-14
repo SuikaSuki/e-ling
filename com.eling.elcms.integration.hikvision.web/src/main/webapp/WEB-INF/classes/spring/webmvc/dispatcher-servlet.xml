@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+       
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+   
+    <!-- 框架控制层 controller--> <!-- 注解探测器 -->
+    <!-- 如果有多个 DispatcherServlet 请把关于数据库和server部分的bean在web.xml中使用spring 的 listener加载-->
+	<!-- 自动扫描controller bean，把作了注解的类转换为bean -->
+	 <!-- 扫描指定的包中的类上的注解，常用的注解有，多个包用[,]隔开 
+		@Controller		声明Action组件
+		@Service		声明Service组件    @Service("myMovieLister") 
+		@Repository		声明Dao组件
+		@Component		泛指组件, 当不好归类时. 
+		@RequestMapping("/menu")	请求映射
+		@Resource		用于注入，( j2ee提供的 ) 默认按名称装配，@Resource(name="beanName") 
+		@Autowired		用于注入，(srping提供的) 默认按类型装配 
+		@Transactional(rollbackFor={Exception.class})	事务管理
+		@ResponseBody
+		@Scope("prototype")		设定bean的作用域
+      -->
+    <context:component-scan base-package="com.eling.elcms"/>
+    <!--  annotation默认的方法映射适配器 -->
+    <bean id="handlerMapping" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+    <bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	
+	
+<!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    	<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+   		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="contentType" value="text/html" />
+	</bean>
+	<!-- 对json xml jsp展现的支持 -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="defaultContentType" value="text/html" />
+		<property name="favorParameter" value="true" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="jspx" value="text/html" />
+				<entry key="json" value="application/json" />
+				<entry key="jxml" value="application/xml" />
+			</map>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<!-- for application/json -->
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" /><!-- 对于实体类的支持 -->
+				
+</beans>

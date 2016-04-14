@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.eling.elcms" />
+
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" value="#{@systemProperties}" />
+		<property name="targetMethod" value="putAll" />
+		<property name="arguments">
+			<props>
+				<!-- ���߿ͻ��˵ķ�������ַ����Ҫ����������ַ 117.121.26.96 127.0.0.1-->
+				<prop key="java.rmi.server.hostname">117.121.26.96</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+		<!-- does not necessarily have to be the same name as the bean to be exported -->
+		<property name="serviceName" value="RmiBaseService" />
+		<property name="service" ref="RmiBaseService" />
+		<property name="serviceInterface" value="com.eling.elcms.agent.impl.IRmiBaseService" />
+		<!-- ע�����ĵ�ַ��defaults to 1099 -->
+		<property name="registryPort" value="51099" />
+		<!-- ����ӿ�ʵ�ʵ���ʱ�Ķ˿� -->
+		<property name="servicePort" value="51098" />
+	</bean>
+
+	<util:map id="jdbcMap" map-class="java.util.HashMap" key-type="java.lang.String"
+		value-type="org.springframework.jdbc.core.JdbcTemplate">
+		<entry key="mysql">
+			<bean class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
+				<property name="dataSource">
+					<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+						<property name="driverClass" value="com.mysql.jdbc.Driver" />
+						<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/elcms?useUnicode=true&amp;characterEncoding=utf-8" />
+						<property name="user" value="root" />
+						<property name="password" value="" />
+						<property name="maxPoolSize" value="50" />
+						<property name="maxIdleTime" value="1800" />
+						<property name="testConnectionOnCheckout" value="false" />
+						<property name="testConnectionOnCheckin" value="true" />
+						<property name="idleConnectionTestPeriod" value="300" />
+					</bean>
+				</property>
+			</bean>
+		</entry>
+		<entry key="location">
+			<bean class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
+				<property name="dataSource">
+					<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+						<property name="driverClass" value="net.sourceforge.jtds.jdbc.Driver" />
+						<property name="jdbcUrl" value="jdbc:jtds:sqlserver://192.168.1.20:1433/QHY" />
+						<property name="user" value="sa" />
+						<property name="password" value="Dbmaster1" />
+						<property name="maxPoolSize" value="50" />
+						<property name="maxIdleTime" value="1800" />
+						<property name="testConnectionOnCheckout" value="false" />
+						<property name="testConnectionOnCheckin" value="true" />
+						<property name="idleConnectionTestPeriod" value="300" />
+					</bean>
+				</property>
+			</bean>
+		</entry>
+	</util:map>
+
+	
+	<import resource="classpath*:/applicationContext-ws*.xml" />
+</beans>

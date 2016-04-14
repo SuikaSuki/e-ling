@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>com.eling.elcms.assistant.api</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<escapeString>\</escapeString>
+					<attachClasses>true</attachClasses>
+					<archiveClasses>${app.build.archiveClasses}</archiveClasses>
+					<packagingExcludes>${app.packagingExcludes}</packagingExcludes>
+					<overlays>
+						<overlay>
+							<groupId>com.eling</groupId>
+							<artifactId>com.eling.elcms.system-web</artifactId>
+							<skip>${app.build.overlay.skip}</skip>
+							<includes>
+								<include>WEB-INF/config/</include>
+								<include>assets/config/</include>
+								<include>mobile/requirejs/</include>
+							</includes>
+							<filtered>${app.build.filtering}</filtered>
+						</overlay>
+						<overlay>
+							<groupId>com.eling</groupId>
+							<artifactId>com.eling.elcms.system-web</artifactId>
+							<skip>${app.build.overlay.skip}</skip>
+							<excludes>
+								<exclude>WEB-INF/config/</exclude>
+								<exclude>assets/config/</exclude>
+								<exclude>mobile/requirejs/</exclude>
+							</excludes>
+						</overlay>
+					</overlays>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.eling</groupId>
+			<artifactId>com.eling.elcms.system</artifactId>
+			<version>1.12.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.eling</groupId>
+			<artifactId>com.eling.elcms.system-web</artifactId>
+			<version>1.8.2</version>
+			<type>war</type>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+
+	<parent>
+		<groupId>com.eling</groupId>
+		<artifactId>elcms.pom</artifactId>
+		<version>1.6.0</version>
+	</parent>
+
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<url>http://117.121.26.96:31010/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>

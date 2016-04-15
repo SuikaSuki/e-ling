@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>com.eling.elcms.assistant.api</artifactId>
+	<version>1.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.eling</groupId>
+			<artifactId>com.eling.elcms.system</artifactId>
+			<version>1.12.0-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+
+	<parent>
+		<groupId>com.eling</groupId>
+		<artifactId>elcms.pom</artifactId>
+		<version>1.6.0</version>
+	</parent>
+
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<url>http://117.121.26.96:31010/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>

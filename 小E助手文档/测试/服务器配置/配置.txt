@@ -1,0 +1,4 @@
+socket转发服务器
+http://117.121.26.96:50032/assistant/sendCommond.do
+socket转发服务器数据库
+117.121.26.96 3309 assistant          assistant@e-ling2016qhy
